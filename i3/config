@@ -1,0 +1,112 @@
+exec --no-startup-id dunst
+# Tecla modificadora (Windows)
+set $mod Mod4
+exec_always --no-startup-id feh --bg-scale /home/dani/.wallpapers/fondo.jpg &q
+
+# Iniciar sesión
+exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY
+exec --no-startup-id systemctl --user import-environment DISPLAY
+
+# Gaps (espacios entre ventanas)
+gaps inner 5
+gaps outer 7
+smart_gaps on
+default_border pixel 0
+# Picom (compositor para transparencias/sombras)
+exec_always --no-startup-id picom -b --config ~/.config/picom/picom.conf
+
+# Atajos básicos
+bindsym $mod+Return exec alacritty
+#bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/theme.rasi
+bindsym $mod+d exec rofi -show run 
+bindsym $mod+Shift+q kill
+
+# Modo por defecto
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Salir de i3?' -b 'Cierra esto' 'i3-msg exit'"
+
+# Layouts
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Navegación
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Mover ventanas
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+
+# Mover ventanas a workspaces
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+
+# Subir brillo
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+
+# Bajar brillo
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+
+#polybar posible implementacion aunque bar es mejor 
+
+# Barra de estado
+# Personalización de la barra i3
+bar {
+    position top
+    height 28
+    status_command i3status
+    workspace_buttons yes
+    tray_output none
+    separator_symbol " | "
+    
+    # Fuentes
+    font pango:DejaVu Sans Mono 10, FontAwesome 10
+    
+    colors {
+        background #2E3440
+        statusline #D8DEE9
+        separator #81A1C1
+        
+        # Colores para workspaces
+        focused_workspace  #81A1C1 #81A1C1 #2E3440
+        active_workspace   #4C566A #4C566A #D8DEE9
+        inactive_workspace #3B4252 #3B4252 #81A1C1
+        urgent_workspace   #BF616A #BF616A #2E3440
+    }
+}
+
+# Path to volume control, without trailing slash
+set $volumepath /bin/i3-volume
+
+# Command for the status line
+#   ie: i3blocks, i3status
+set $statuscmd i3blocks
+
+# Signal used to update the status line
+#   i3blocks uses SIGRTMIN+10 by default
+#   i3status uses SIGUSR1 by default
+set $statussig SIGRTMIN+10
+
+# Using pulseaudio-utils (append "-s $sinkname" without quotes to override default sink)
+bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -n -t $statuscmd -u $statussig up 5
+bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -n -t $statuscmd -u $statussig down 5
+bindsym XF86AudioMute        exec --no-startup-id $volumepath/volume -n -t $statuscmd -u $statussig mute
