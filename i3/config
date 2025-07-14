@@ -18,7 +18,7 @@ exec_always --no-startup-id picom -b --config ~/.config/picom/picom.conf
 # Atajos básicos
 bindsym $mod+Return exec alacritty
 #bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/theme.rasi
-bindsym $mod+d exec rofi -show run 
+bindsym $mod+d exec rofi -show drun 
 bindsym $mod+Shift+q kill
 
 # Modo por defecto
@@ -48,17 +48,20 @@ set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
+set $ws5 "5"
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
 
 # Mover ventanas a workspaces
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
 
 # Subir brillo
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
