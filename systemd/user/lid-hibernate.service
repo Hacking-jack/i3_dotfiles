@@ -1,0 +1,10 @@
+[Unit]
+Dscription= Hibernate while lid close 
+Before=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/dani/.config/i3/scripts/suspend-hibernate.sh
+
+[Install]
+WantedBy=sleep.target

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Obtén la resolución total de la pantalla virtual
+width=$(xrandr | grep '*' | awk '{print $1}' | head -n1 | cut -d'x' -f1)
+height=$(xrandr | grep '*' | awk '{print $1}' | head -n1 | cut -d'x' -f2)
+total_height=0
+
+# Suma alturas de todos los monitores conectados
+while read -r line; do
+    res=$(echo $line | awk '{print $4}' | cut -d'x' -f2)
+    total_height=$((total_height + res))
+done < <(xrandr | grep ' connected' | grep -v 'disconnected')
+
+# Aquí debes ajustar las posiciones y nombres según tu setup
+# Para tu setup: HDMI arriba, LVDS abajo
+convert -size 1920x1848 xc:black \
+  \( ~/.wallpapers/nubes.JPG -resize 1920x1080! \) -geometry +0+0 -composite \
+  \( ~/.wallpapers/nubes.JPG -resize 1366x768! \) -geometry +277+1080 -composite \
+  ~/.wallpapers/nubes.JPG
+# Aplica el fondo
+feh --bg-fill ~/.wallpapers/fondo.jpg
+
+xsetwacom set "XP-PEN STAR G640 Pen (0)" MapToOutput LVDS-1

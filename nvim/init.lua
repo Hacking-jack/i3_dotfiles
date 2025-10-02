@@ -1,20 +1,87 @@
--- ~/.config/nvim/init.lua
-require("config.options")
-require("config.lazy")
--- -- Bootstrap lazy.nvim (instala si no está)
--- local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
--- if not vim.loop.fs_stat(lazypath) then
---   vim.fn.system({
---     "git", "clone", "--filter=blob:none",
---     "https://github.com/folke/lazy.nvim.git",
---     "--branch=stable", lazypath,
---   })
--- end
--- vim.opt.rtp:prepend(lazypath)
--- 
--- -- Carga tu configuración de lazy (plugins)
--- require("config.lazy")
--- 
--- -- Aquí cargas otras configuraciones como options, keymaps, etc
--- require("config.options")
--- 
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = false
+vim.opt.termguicolors = true
+vim.opt.wrap = true
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = ">>",
+  eol = "↲",
+  trail = "·",
+  space = "·",
+}
+vim.opt.clipboard = "unnamedplus"
+
+-- ========================
+--   Plugins con lazy.nvim
+-- ========================
+require("lazy.lazy")
+vim.cmd("colorscheme tokyonight")
+-- ========================
+--   LSP config
+-- ========================
+require("plugin.cmp")
+-- ========================
+--   LSP config
+-- ========================
+local lspconfig = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+local home = os.getenv("HOME")
+-- Python
+lspconfig.pyright.setup({ capabilities = capabilities })
+
+-- C/C++
+lspconfig.clangd.setup({ capabilities = capabilities })
+
+-- JavaScript / TypeScript
+lspconfig.ts_ls.setup({ capabilities = capabilities })
+
+-- Java (requiere jdtls instalado aparte)
+lspconfig.jdtls.setup({
+    cmd = {
+        "jdtls",
+        "-configuration", home .. "/.cache/jdtls/config",
+        "-data", home .. "/.cache/jdtls/workspace"
+    },
+    capabilities = capabilities,
+})
+
+
+
+-- ========================
+--   Formattrt
+-- ========================
+
+-- require("plugin.ls-42")
+-- ========================
+--   Configuración arbol de arcivos
+-- ========================
+require("nvim-tree").setup({
+    sort_by = "name",
+    view = {
+        width = 30,         -- ancho del árbol lateral
+        side = "left",      -- lado donde aparece
+        preserve_window_proportions = true,
+    },
+    renderer = {
+        icons = {
+            show = {
+                git = true,
+                folder = true,
+                file = true,
+                folder_arrow = true,
+            },
+        },
+    },
+    filters = {
+        dotfiles = true,     -- mostrar archivos ocultos
+    },
+    update_focused_file = {
+        enable = true,
+        update_cwd = true,
+    },
+})
+require("keys.generales")
