@@ -1,3 +1,6 @@
+-- ========================
+--   Opciones generales
+-- ========================
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
@@ -17,12 +20,18 @@ vim.opt.clipboard = "unnamedplus"
 -- ========================
 --   Plugins con lazy.nvim
 -- ========================
-require("lazy.lazy")
-vim.cmd("colorscheme tokyonight")
+require("plugins")
+
 -- ========================
---   LSP config
+--   Colorscheme
+-- ========================
+vim.cmd("colorscheme tokyonight")
+
+-- ========================
+--   Autocompletado (cmp)
 -- ========================
 require("plugin.cmp")
+
 -- ========================
 --   LSP config
 -- ========================
@@ -30,16 +39,11 @@ local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local home = os.getenv("HOME")
--- Python
+
 lspconfig.pyright.setup({ capabilities = capabilities })
-
--- C/C++
 lspconfig.clangd.setup({ capabilities = capabilities })
-
--- JavaScript / TypeScript
 lspconfig.ts_ls.setup({ capabilities = capabilities })
 
--- Java (requiere jdtls instalado aparte)
 lspconfig.jdtls.setup({
     cmd = {
         "jdtls",
@@ -49,21 +53,19 @@ lspconfig.jdtls.setup({
     capabilities = capabilities,
 })
 
-
-
 -- ========================
---   Formattrt
+--   Norma 42 (opcional)
 -- ========================
-
 -- require("plugin.ls-42")
+
 -- ========================
---   Configuración arbol de arcivos
+--   Árbol de archivos
 -- ========================
 require("nvim-tree").setup({
     sort_by = "name",
     view = {
-        width = 30,         -- ancho del árbol lateral
-        side = "left",      -- lado donde aparece
+        width = 30,
+        side = "left",
         preserve_window_proportions = true,
     },
     renderer = {
@@ -77,11 +79,15 @@ require("nvim-tree").setup({
         },
     },
     filters = {
-        dotfiles = true,     -- mostrar archivos ocultos
+        dotfiles = true,
     },
     update_focused_file = {
         enable = true,
         update_cwd = true,
     },
 })
+
+-- ========================
+--   Keymaps
+-- ========================
 require("keys.generales")

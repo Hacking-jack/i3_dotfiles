@@ -1,0 +1,12 @@
+#!/bin/bash
+WIFI=$(iwgetid -r 2>/dev/null)
+ETH=$(ip route | grep default | awk '{print $5}' | head -1)
+ETH_UP=$(cat /sys/class/net/$ETH/operstate 2>/dev/null)
+
+if [ -n "$WIFI" ]; then
+    echo "󰤨 $WIFI"
+elif [ "$ETH_UP" = "up" ]; then
+    echo "󰈀 Ethernet"
+else
+    echo "󰤭 Sin red"
+fi

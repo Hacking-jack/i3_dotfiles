@@ -1,17 +1,110 @@
-[RAM]
-command=~/.config/i3blocks/scripts/ram.sh
-interval=5
+# ~/.config/i3blocks/config
+# Todos los scripts están en ~/.config/i3blocks/scripts/
 
-[battery]
-command=acpi -b | awk '{gsub(",",""); print $4 " " $5 }'
+[settings]
+separator=false
+separator_block_width=0
+
+# ===========================
+#   CPU
+# ===========================
+[cpu_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[cpu]
+command=~/.config/i3blocks/scripts/cpu
+interval=2
+color=#c0caf5
+
+# ===========================
+#   RAM
+# ===========================
+[ram_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[ram]
+command=~/.config/i3blocks/scripts/ram
 interval=5
-color=#00FF00
+color=#c0caf5
+
+# ===========================
+#   DISCO
+# ===========================
+[disk_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[disk]
+command=~/.config/i3blocks/scripts/disk
+interval=30
+color=#c0caf5
+
+# ===========================
+#   RED
+# ===========================
+[net_sep]
+full_text= 
+color=#7aa2f7
+interval=once
 
 [network]
-command=~/.config/i3blocks/scripts/network.sh
-interval=10
+command=~/.config/i3blocks/scripts/network
+interval=5
+color=#c0caf5
 
-[time]
-command=~/.config/i3blocks/scripts/time.sh
-interval=1
+# ===========================
+#   VOLUMEN
+# ===========================
+[vol_sep]
+full_text= 
+color=#7aa2f7
+interval=once
 
+[volume]
+command=~/.config/i3blocks/scripts/volume
+interval=2
+color=#c0caf5
+
+# ===========================
+#   BATERÍA
+# ===========================
+[bat_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[battery]
+command=~/.config/i3blocks/scripts/battery
+interval=30
+color=#c0caf5
+
+# ===========================
+#   TEMPERATURA
+# ===========================
+[temp_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[temperature]
+command=~/.config/i3blocks/scripts/temperature
+interval=5
+color=#c0caf5
+
+# ===========================
+#   FECHA Y HORA
+# ===========================
+[date_sep]
+full_text= 
+color=#7aa2f7
+interval=once
+
+[datetime]
+command=~/.config/i3blocks/scripts/datetime
+interval=30
+color=#c0caf5

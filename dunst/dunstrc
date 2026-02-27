@@ -1,0 +1,28 @@
+[global]
+    # Posición: top-right, top-left, bottom-right, bottom-left, top-center
+    origin = top-right
+    offset = 10x50          # distancia desde el borde (x, y)
+    width = 300             # ancho de la notificación
+    height = 200            # alto máximo
+    gap_size = 5            # espacio entre notificaciones
+    font = JetBrainsMono 10
+    frame_width = 0         # borde
+    frame_color = "#89b4fa" # color del borde
+    timeout = 5             # segundos que dura
+	corner_radius = 5
+	icon_corner_radius = 5
+
+[urgency_low]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 3
+
+[urgency_normal]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 5
+
+[urgency_critical]
+    background = "#f38ba8"
+    foreground = "#1e1e2e"
+    timeout = 0
