@@ -1,0 +1,19 @@
+ [window]
+padding = { x = 5, y = 5 }
+dynamic_padding = true
+decorations = "none"
+opacity = 0.95
+
+[font]
+size = 12
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+[colors.primary]
+background = "#1a1b26"
+foreground = "#c0caf5"
