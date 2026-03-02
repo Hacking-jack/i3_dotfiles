@@ -1,23 +1,26 @@
 #!/bin/bash
 
-# Obtén la resolución total de la pantalla virtual
-width=$(xrandr | grep '*' | awk '{print $1}' | head -n1 | cut -d'x' -f1)
-height=$(xrandr | grep '*' | awk '{print $1}' | head -n1 | cut -d'x' -f2)
-total_height=0
+# ===========================
+#   Wallpaper para todos los monitores
+# ===========================
 
-# Suma alturas de todos los monitores conectados
-while read -r line; do
-    res=$(echo $line | awk '{print $4}' | cut -d'x' -f2)
-    total_height=$((total_height + res))
-done < <(xrandr | grep ' connected' | grep -v 'disconnected')
+WALLPAPER=~/.wallpapers/mountain.jpg
 
-# Aquí debes ajustar las posiciones y nombres según tu setup
-# Para tu setup: HDMI arriba, LVDS abajo
-convert -size 1920x1848 xc:black \
-  \( ~/.wallpapers/nubes.JPG -resize 1920x1080! \) -geometry +0+0 -composite \
-  \( ~/.wallpapers/nubes.JPG -resize 1366x768! \) -geometry +277+1080 -composite \
-  ~/.wallpapers/nubes.JPG
-# Aplica el fondo
-feh --bg-fill ~/.wallpapers/fondo.jpg
+# Obtener monitores conectados
+MONITORS=$(xrandr | grep ' connected' | awk '{print $1}')
+COUNT=$(echo "$MONITORS" | wc -l)
 
-xsetwacom set "XP-PEN STAR G640 Pen (0)" MapToOutput LVDS-1
+echo "Monitores detectados: $COUNT"
+echo "$MONITORS"
+
+# Construir argumentos para feh (uno por monitor)
+FEH_ARGS=""
+for monitor in $MONITORS; do
+    FEH_ARGS="$FEH_ARGS --bg-fill $WALLPAPER"
+done
+
+# Aplicar fondo a todos los monitores
+feh $FEH_ARGS
+
+# Mapear XP-PEN a pantalla interna
+xsetwacom set "XP-PEN STAR G640 Pen (0)" MapToOutput eDP-1
