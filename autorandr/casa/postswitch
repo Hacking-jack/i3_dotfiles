@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# ===========================
+#   Wallpaper para todos los monitores
+# ===========================
+
+WALLPAPER=~/.wallpapers/mountain.jpg
+
+# Obtener monitores conectados
+MONITORS=$(xrandr | grep ' connected' | awk '{print $1}')
+COUNT=$(echo "$MONITORS" | wc -l)
+
+echo "Monitores detectados: $COUNT"
+echo "$MONITORS"
+
+# Construir argumentos para feh (uno por monitor)
+FEH_ARGS=""
+for monitor in $MONITORS; do
+    FEH_ARGS="$FEH_ARGS --bg-fill $WALLPAPER"
+done
+
+# Aplicar fondo a todos los monitores
+feh $FEH_ARGS
+
+# Mapear XP-PEN a pantalla interna
+xsetwacom set "XP-PEN STAR G640 Pen (0)" MapToOutput eDP-1

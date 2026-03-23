@@ -1,9 +1,12 @@
 font pango:JetBrains Mono 11
 
+exec --no-startup-id fusuma
+
 exec --no-startup-id lxqt-policykit-agent
 
 exec --no-startup-id dunst
 
+exec --no-startup-id numlockx on
 # Tecla modificadora (Windows)
 set $mod Mod4
 exec_always --no-startup-id feh --bg-fill /home/dani/.wallpapers/mountain.jpg &

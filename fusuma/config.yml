@@ -1,0 +1,16 @@
+swipe:
+  3:
+    left:
+      command: "i3-msg workspace next"
+    right:
+      command: "i3-msg workspace prev"
+    up:
+      command: "i3-msg focus up"
+    down:
+      command: "i3-msg focus down"
+
+pinch:
+  in:
+    command: "i3-msg fullscreen enable"
+  out:
+    command: "i3-msg fullscreen disable"

@@ -24,6 +24,7 @@ PACMAN_PACKAGES=(
 	bash-completion
 	starship
 	pkgfile
+	numlockx
 
     # i3 y entorno
     i3-wm
@@ -76,6 +77,7 @@ PACMAN_PACKAGES=(
 AUR_PACKAGES=(
 	zen_browser_bin
 	betterlockscreen
+	fusuma
 )
 
 # ===========================
@@ -153,10 +155,42 @@ summary() {
     echo -e "${NC}"
 }
 
-configure_ly{
+configure_ly() {
 	if pacman -Qi ly &>/dev/null && systemctl is-active --quiet ly*;then
 		sudo systemctl enable --now ly@tty1.service
+	fi
 }
+configure_fusuma() {
+    echo -e "${BLUE}Configurando fusuma...${NC}"
+
+    sudo pacman -S --noconfirm ruby libinput xdotool
+
+    sudo gpasswd -a "$USER" input
+
+    mkdir -p ~/.config/fusuma
+
+cat <<EOF > ~/.config/fusuma/config.yml
+swipe:
+  3:
+    left:
+      command: "i3-msg workspace next"
+    right:
+      command: "i3-msg workspace prev"
+    up:
+      command: "i3-msg focus up"
+    down:
+      command: "i3-msg focus down"
+
+pinch:
+  in:
+    command: "i3-msg fullscreen enable"
+  out:
+    command: "i3-msg fullscreen disable"
+EOF
+
+    echo -e "${GREEN}Fusuma configurado.${NC}"
+}
+
 # ===========================
 #   Main
 # ===========================
@@ -216,3 +250,4 @@ done
 echo "✅ Todos los enlaces han sido creados."
 echo "ARRANCANDO EL SISTEMA................................"
 configure_ly
+configure_fusuma
