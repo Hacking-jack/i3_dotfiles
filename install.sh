@@ -216,10 +216,11 @@ mkdir -p "$CONFIG_DIR"
 
 # Enlazar directorios en .config
 for dir in "$SCRIPT_DIR"/*/; do
-    name=$(basename "$dir")
+    name=$( "$dir")
 
     # Evitar carpetas que no deben enlazarse
     [[ "$name" == ".git" ]] && continue
+    [[ "$name" == "install.sh" ]] && continue
 
     echo "📂 Enlazando directorio $name → $CONFIG_DIR/$name"
     ln -sfn "$dir" "$CONFIG_DIR/$name"
